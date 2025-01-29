@@ -1,7 +1,7 @@
 import math
 
 
-def metodo_newton_raphson(funcao, derivada_funcao, x0, tol=0.00000001, max_iter=10000000):
+def metodo_newton_raphson(funcao, derivada_funcao, x0, tol=0.00000001, max_iter=10000000):  # mudar aqui
     """
     Método de Newton-Raphson para encontrar as raízes de uma função.
 

@@ -37,8 +37,8 @@ def f(x):
             "x deve ser maior que 0 para calcular o logaritmo natural.")
 
     # x**(log(x)) = e^(log(x) * log(x)) = e^((ln x)^2)
-    # TERMO É A FUNCAO
-    return x**2
+    # Esse termo pode crescer muito ou ficar muito pequeno dependendo de x.
+    return x ** (math.log(x)) + x**2 - x**3 * math.sin(x)
 
 # ======================================================================================================================
 #  DERIVADA f'(x)
@@ -80,15 +80,17 @@ def df(x):
     # Derivada de x^2 é 2x.
     # Derivada de -x^3 sin(x) é -(3x^2 sin(x) + x^3 cos(x)).
     # A soma desses termos resulta:
-    # termo é a derivada de x^2
-    return (X**3/2)
+    return (2 * math.log(x) * x ** (math.log(x) - 1)   # derivada de x^(ln(x))
+            - x**3 * math.cos(x)                      # parte de -x^3 sin(x)
+            - 3 * x**2 * math.sin(x)                  # parte de -x^3 sin(x)
+            + 2 * x)                                   # derivada de x^2
 
 # ======================================================================================================================
 #  MÉTODO DA BISSECÇÃO
 # ======================================================================================================================
 
 
-def bisseccao(a, b, e, max_iter=1000):  # iteracao maxima
+def bisseccao(a, b, e, max_iter=1000):
     """
     Método da Bissecção para encontrar raízes de f(x) no intervalo [a, b].
 
@@ -148,7 +150,9 @@ def bisseccao(a, b, e, max_iter=1000):  # iteracao maxima
     # Retorna o ponto médio final como estimativa da raiz
     return (a + b) / 2, iteracoes
 
+# ======================================================================================================================
 #  MÉTODO DE NEWTON-RAPHSON
+# ======================================================================================================================
 
 
 def newton_raphson(x0, e, max_iter=1000):
@@ -204,7 +208,9 @@ def newton_raphson(x0, e, max_iter=1000):
     # Se não convergiu em max_iter, retorna None
     return None, iteracoes
 
+# ======================================================================================================================
 #  MÉTODO DA SECANTE
+# ======================================================================================================================
 
 
 def secante(x0, x1, e, max_iter=1000):
@@ -257,7 +263,9 @@ def secante(x0, x1, e, max_iter=1000):
 
     return None, iteracoes
 
+# ======================================================================================================================
 #  MÉTODO DE PONTO FIXO
+# ======================================================================================================================
 
 
 def ponto_fixo(g, x0, e, max_iter=1000):

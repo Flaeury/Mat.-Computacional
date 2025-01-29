@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def fatoracao_lu_com_pivoteamento_parcial(A):
     """
     Realiza a fatoração LU com pivoteamento parcial.
@@ -34,6 +35,7 @@ def fatoracao_lu_com_pivoteamento_parcial(A):
     np.fill_diagonal(L, 1)
     return P, L, U
 
+
 def resolver_com_lu(P, L, U, b):
     """
     Resolve o sistema linear Ax = b usando a fatoração LU e a matriz de permutação P.
@@ -62,9 +64,9 @@ def resolver_com_lu(P, L, U, b):
 
     return x
 
+
 def escalonamento_por_FatLU(A, b):
     P, L, U = fatoracao_lu_com_pivoteamento_parcial(A)
-
 
     # Resolver o sistema linear
     x = resolver_com_lu(P, L, U, b)
@@ -80,14 +82,10 @@ def escalonamento_por_FatLU(A, b):
         print(f"  Termo independente (b): {b[i]}")
         print(f"  Diferença: {abs(resultado - b[i])}\n")
 
+
 if __name__ == "__main__":
     matriz = np.array([
-        [10, 1, 1,2,1,3],
-        [2, 10, 1, 2, 1, 3],
-        [1, 1, 10, 5,1,1],
-        [2,1,4,10, 1,1],
-        [1,2,4,1,10,1],
-        [1,1,1,4,2,10],
+        [10, 1, 1, 2, 1, 3],
 
     ])
     vetor = np.array([[12], [13], [14], [15], [16], [17]])
