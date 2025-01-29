@@ -2,9 +2,6 @@ import math
 
 
 def calcular_ex_serie(x, n):
-    """
-    Calcula e^x usando a série de Taylor com n termos.
-    """
     resultado = 0
     for k in range(n + 1):
         termo = (x ** k) / math.factorial(k)

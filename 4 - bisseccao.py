@@ -6,7 +6,7 @@ e = sys.float_info.epsilon
 
 def bissecao(f, a, b, e):
     if f(a) * f(b) > 0:
-        return "Intervalo inavlido, f(a) e f(b) deve ter sinais opostos"
+        return "Intervalo invalido, f(a) e f(b) deve ter sinais opostos"
     while (b-a)/2 > e:
         c = (a+b)/2
         if f(c) == 0:

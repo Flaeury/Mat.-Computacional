@@ -1,7 +1,4 @@
 def binario_para_decimal(binario):
-    """
-    Converte um número binário (string) para decimal (inteiro).
-    """
     try:
         decimal = int(binario, 2)
         return decimal
@@ -10,9 +7,6 @@ def binario_para_decimal(binario):
 
 
 def decimal_para_binario(decimal):
-    """
-    Converte um número decimal (inteiro) para binário (string).
-    """
     try:
         decimal = int(decimal)
         binario = bin(decimal)[2:]  # Remove o prefixo '0b'

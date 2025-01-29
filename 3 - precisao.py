@@ -1,8 +1,4 @@
 def precisao_maquina(referencia=1):
-    """
-    Calcula a precisão da máquina baseada no algoritmo descrito.
-    - referência: valor de referência para a comparação no passo 2.
-    """
     A = 1.0  # Início com precisão simples (ponto flutuante)
     s = referencia + A
     while s > referencia:
@@ -15,14 +11,13 @@ def precisao_maquina(referencia=1):
 def testar_precisao():
     print("Teste da Precisão da Máquina:\n")
 
-    # a) Teste para precisão simples e dupla
     print("Teste com precisão simples:")
     precisao_simples = precisao_maquina()
     print(f"Precisão simples (referência = 1): {precisao_simples:.10e}")
 
     print("\nTeste com precisão dupla (simulada):")
     import numpy as np
-    A = np.float64(1.0)  # Usa float64 para maior precisão
+    A = np.float64(1.0)
     referencia = 1.0
     s = referencia + A
     while s > referencia:
@@ -31,7 +26,6 @@ def testar_precisao():
     precisao_dupla = 2 * A
     print(f"Precisão dupla (referência = 1): {precisao_dupla:.20e}")
 
-    # c.1) Teste para valores diferentes de referência
     valores_referencia = [10, 17, 100, 184, 1000, 1575, 10000, 17893]
     print("\nTeste com valores de referência diferentes:")
     for ref in valores_referencia:
