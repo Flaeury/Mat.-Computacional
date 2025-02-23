@@ -77,15 +77,20 @@ def escalonamento_por_FatLU(A, b):
     print("\nVerificação do sistema:")
     for i in range(len(b)):
         resultado = sum(A[i, j] * x[j] for j in range(len(x)))
-        print(f"Equação {i + 1}:")
-        print(f"  Resultado (Ax): {resultado}")
-        print(f"  Termo independente (b): {b[i]}")
-        print(f"  Diferença: {abs(resultado - b[i])}\n")
+        # print(f"Equação {i + 1}:")
+        # print(f"  Resultado (Ax): {resultado}")
+        # print(f"  Termo independente (b): {b[i]}")
+        # print(f"  Diferença: {abs(resultado - b[i])}\n")
 
 
 if __name__ == "__main__":
     matriz = np.array([
         [10, 1, 1, 2, 1, 3],
+        [2, 10, 1, 2, 1, 3],
+        [1, 1, 10, 5, 1, 1],
+        [2, 1, 4, 10, 1, 1],
+        [1, 2, 4, 1, 10, 1],
+        [1, 1, 1, 4, 2, 10],
 
     ])
     vetor = np.array([[12], [13], [14], [15], [16], [17]])

@@ -18,8 +18,8 @@ def sistema(x):
     N = len(x)
     b = [0] * N
     # Sistema de equações não lineares
-    b[0] = x[0]**2  # termo é sistema naolinear
-    b[1] = math.e**(x[0]-1)  # TERMO É SISTEMA NAOLINEAR
+    b[0] = x[0]**2 + x[1]**2 - 2
+    b[1] = math.e**(x[0]-2) + (x[1]**3) - 2
     return b
 
 
@@ -41,7 +41,7 @@ def jacobiana(x):
     # Derivadas parciais do sistema
     A[0][0] = 2 * x[0]
     A[0][1] = 2 * x[1]
-    A[1][0] = math.e**(x[0]-1)
+    A[1][0] = math.e**(x[0]-2)
     A[1][1] = 3 * (x[1]**2)
     return A
 

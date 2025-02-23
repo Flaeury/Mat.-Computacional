@@ -1,6 +1,7 @@
 import numpy as np
 
-def resolver_sistema_linear_gauss_jacobi(matriz, vetor, precisao=5, max_iteracoes=500):
+
+def resolver_sistema_linear_gauss_jacobi(matriz, vetor, precisao=10, max_iteracoes=10000):
     """
     Resolve um sistema linear Ax = b usando o método iterativo de Gauss-Jacobi.
 
@@ -30,14 +31,17 @@ def resolver_sistema_linear_gauss_jacobi(matriz, vetor, precisao=5, max_iteracoe
 
     while erro >= 10**(-precisao) and iteracoes <= max_iteracoes:
         solucao_nova = B @ solucao_antiga + d
-        erro = np.max(np.abs(solucao_nova - solucao_antiga)) / np.max(np.abs(solucao_nova))
+        erro = np.max(np.abs(solucao_nova - solucao_antiga)) / \
+            np.max(np.abs(solucao_nova))
         solucao_antiga = np.copy(solucao_nova)
         iteracoes += 1
 
     if iteracoes > max_iteracoes:
-        raise Exception("O método não convergiu após o número máximo de iterações.")
+        raise Exception(
+            "O método não convergiu após o número máximo de iterações.")
 
     return solucao_nova, iteracoes
+
 
 def verificar_matriz_adequada(matriz):
     """
@@ -52,21 +56,23 @@ def verificar_matriz_adequada(matriz):
     tamanho = matriz.shape[0]
     for i in range(tamanho):
         elemento_diagonal = abs(matriz[i, i])
-        soma_fora_diagonal = sum(abs(matriz[i, j]) for j in range(tamanho) if j != i)
+        soma_fora_diagonal = sum(abs(matriz[i, j])
+                                 for j in range(tamanho) if j != i)
         if elemento_diagonal <= soma_fora_diagonal:
             return False
     return True
+
 
 # Exemplo de uso
 if __name__ == "__main__":
     # Matriz estritamente diagonal dominante e vetor dos termos independentes
     matriz = np.array([
-        [10, 1, 1,2,1,3],
+        [10, 1, 1, 2, 1, 3],
         [2, 10, 1, 2, 1, 3],
-        [1, 1, 10, 5,1,1],
-        [2,1,4,10, 1,1],
-        [1,2,4,1,10,1],
-        [1,1,1,4,2,10],
+        [1, 1, 10, 5, 1, 1],
+        [2, 1, 4, 10, 1, 1],
+        [1, 2, 4, 1, 10, 1],
+        [1, 1, 1, 4, 2, 10],
 
     ])
     vetor = np.array([[12], [13], [14], [15], [16], [17]])
@@ -77,9 +83,10 @@ if __name__ == "__main__":
     print(vetor)
 
     if verificar_matriz_adequada(matriz):
-        print("\nA matriz é adequada para o método de Gauss-Jacobi.")
+        # print("\nA matriz é adequada para o método de Gauss-Jacobi.")
         try:
-            solucao, iteracoes = resolver_sistema_linear_gauss_jacobi(matriz, vetor)
+            solucao, iteracoes = resolver_sistema_linear_gauss_jacobi(
+                matriz, vetor)
             print("\nSolução encontrada:")
             print(solucao)
             print(f"Número de iterações realizadas: {iteracoes}")

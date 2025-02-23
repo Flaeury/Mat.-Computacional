@@ -7,7 +7,7 @@ import math
 
 def f(x):
     """
-    Define a função f(x) = x^log(x) + x^2 - x^3 * sin(x).
+    Define a função 
 
     Parâmetros:
     -----------
@@ -38,7 +38,8 @@ def f(x):
 
     # x**(log(x)) = e^(log(x) * log(x)) = e^((ln x)^2)
     # Esse termo pode crescer muito ou ficar muito pequeno dependendo de x.
-    return x ** (math.log(x)) + x**2 - x**3 * math.sin(x)
+    return (x*(-3*x + 10*x**2*math.cos(x**2) * (math.log(x)) + 5 * (1 + 2*math.log(x))*math.sin(x**2)))
+
 
 # ======================================================================================================================
 #  DERIVADA f'(x)
@@ -80,17 +81,14 @@ def df(x):
     # Derivada de x^2 é 2x.
     # Derivada de -x^3 sin(x) é -(3x^2 sin(x) + x^3 cos(x)).
     # A soma desses termos resulta:
-    return (2 * math.log(x) * x ** (math.log(x) - 1)   # derivada de x^(ln(x))
-            - x**3 * math.cos(x)                      # parte de -x^3 sin(x)
-            - 3 * x**2 * math.sin(x)                  # parte de -x^3 sin(x)
-            + 2 * x)                                   # derivada de x^2
+    return (x*(-3*x + 10*x**2*math.cos(x**2) * (math.log(x)) + 5 * (1 + 2*math.log(x))*math.sin(x**2)))
 
 # ======================================================================================================================
 #  MÉTODO DA BISSECÇÃO
 # ======================================================================================================================
 
 
-def bisseccao(a, b, e, max_iter=1000):
+def bisseccao(a, b, e, max_iter=100000):
     """
     Método da Bissecção para encontrar raízes de f(x) no intervalo [a, b].
 
@@ -155,7 +153,7 @@ def bisseccao(a, b, e, max_iter=1000):
 # ======================================================================================================================
 
 
-def newton_raphson(x0, e, max_iter=1000):
+def newton_raphson(x0, e, max_iter=10000):
     """
     Método de Newton-Raphson para encontrar raízes de f(x).
 
@@ -263,121 +261,121 @@ def secante(x0, x1, e, max_iter=1000):
 
     return None, iteracoes
 
-# ======================================================================================================================
-#  MÉTODO DE PONTO FIXO
-# ======================================================================================================================
+# # ======================================================================================================================
+# #  MÉTODO DE PONTO FIXO
+# # ======================================================================================================================
 
 
-def ponto_fixo(g, x0, e, max_iter=1000):
-    """
-    Método de Ponto Fixo para encontrar raízes de f(x),
-    dadas por uma função de iteração x_{n+1} = g(x_n).
+# def ponto_fixo(g, x0, e, max_iter=1000):
+#     """
+#     Método de Ponto Fixo para encontrar raízes de f(x),
+#     dadas por uma função de iteração x_{n+1} = g(x_n).
 
-    Parâmetros:
-    -----------
-    g : function
-        Função de iteração que deve satisfazer x = g(x) na raiz.
-    x0 : float
-        Chute inicial, deve ser > 0 para essa função específica.
-    e : float
-        Tolerância de erro para o critério de parada.
-    max_iter : int, opcional
-        Número máximo de iterações permitidas.
+#     Parâmetros:
+#     -----------
+#     g : function
+#         Função de iteração que deve satisfazer x = g(x) na raiz.
+#     x0 : float
+#         Chute inicial, deve ser > 0 para essa função específica.
+#     e : float
+#         Tolerância de erro para o critério de parada.
+#     max_iter : int, opcional
+#         Número máximo de iterações permitidas.
 
-    Retorna:
-    --------
-    (raiz, iteracoes) : (float, int)
-        raiz : valor que satisfaz x = g(x),
-        iteracoes : número de iterações até convergir ou chegar em max_iter.
+#     Retorna:
+#     --------
+#     (raiz, iteracoes) : (float, int)
+#         raiz : valor que satisfaz x = g(x),
+#         iteracoes : número de iterações até convergir ou chegar em max_iter.
 
-    Possíveis erros:
-    ----------------
-    - Se x0 <= 0, retorna (None, 0).
-    - A função g pode levar a um x1 <= 0, o que invalida o domínio de f(x).
+#     Possíveis erros:
+#     ----------------
+#     - Se x0 <= 0, retorna (None, 0).
+#     - A função g pode levar a um x1 <= 0, o que invalida o domínio de f(x).
 
-    Como consertar:
-    ---------------
-    - Escolher adequadamente g(x) e x0 para garantir convergência (|g'(x)| < 1).
-    - Garantir x0 > 0.
-    """
-    if x0 <= 0:
-        return None, 0
+#     Como consertar:
+#     ---------------
+#     - Escolher adequadamente g(x) e x0 para garantir convergência (|g'(x)| < 1).
+#     - Garantir x0 > 0.
+#     """
+#     if x0 <= 0:
+#         return None, 0
 
-    iteracoes = 0
-    while iteracoes < max_iter:
-        x1 = g(x0)  # aplica a função de iteração
+#     iteracoes = 0
+#     while iteracoes < max_iter:
+#         x1 = g(x0)  # aplica a função de iteração
 
-        # Se x1 <= 0, não é válido no domínio de f(x)
-        if x1 <= 0 or abs(x1 - x0) < e:
-            return x1, iteracoes + 1
+#         # Se x1 <= 0, não é válido no domínio de f(x)
+#         if x1 <= 0 or abs(x1 - x0) < e:
+#             return x1, iteracoes + 1
 
-        x0 = x1
-        iteracoes += 1
+#         x0 = x1
+#         iteracoes += 1
 
-    return None, iteracoes
+#     return None, iteracoes
 
 #  MÉTODO DA POSIÇÃO FALSA
 
 
-def posicao_falsa(a, b, e, max_iter=1000):
-    """
-    Método da Posição Falsa (Regula Falsi) para encontrar raízes de f(x) no intervalo [a, b].
+# def posicao_falsa(a, b, e, max_iter=1000):
+#     """
+#     Método da Posição Falsa (Regula Falsi) para encontrar raízes de f(x) no intervalo [a, b].
 
-    Parâmetros:
-    -----------
-    a, b : float
-        Extremos do intervalo [a, b], ambos > 0.
-    e : float
-        Tolerância de erro para o critério de parada.
-    max_iter : int, opcional
-        Número máximo de iterações permitidas.
+#     Parâmetros:
+#     -----------
+#     a, b : float
+#         Extremos do intervalo [a, b], ambos > 0.
+#     e : float
+#         Tolerância de erro para o critério de parada.
+#     max_iter : int, opcional
+#         Número máximo de iterações permitidas.
 
-    Retorna:
-    --------
-    (raiz, iteracoes) : (float, int)
-        raiz : estimativa da raiz,
-        iteracoes : número de iterações realizadas.
+#     Retorna:
+#     --------
+#     (raiz, iteracoes) : (float, int)
+#         raiz : estimativa da raiz,
+#         iteracoes : número de iterações realizadas.
 
-    Possíveis erros:
-    ----------------
-    - Se a <= 0 ou b <= 0, retornamos (None, 0).
-    - Se f(a)*f(b) >= 0, não há garantia de mudança de sinal no intervalo, retorna (None, 0).
-    - Podem ocorrer problemas de convergência lenta em alguns casos.
+#     Possíveis erros:
+#     ----------------
+#     - Se a <= 0 ou b <= 0, retornamos (None, 0).
+#     - Se f(a)*f(b) >= 0, não há garantia de mudança de sinal no intervalo, retorna (None, 0).
+#     - Podem ocorrer problemas de convergência lenta em alguns casos.
 
-    Como consertar:
-    ---------------
-    - Verificar se a < b e ambos > 0.
-    - Verificar se f(a)*f(b) < 0 para garantir mudança de sinal.
-    """
-    if a <= 0 or b <= 0:
-        return None, 0
+#     Como consertar:
+#     ---------------
+#     - Verificar se a < b e ambos > 0.
+#     - Verificar se f(a)*f(b) < 0 para garantir mudança de sinal.
+#     """
+#     if a <= 0 or b <= 0:
+#         return None, 0
 
-    fa, fb = f(a), f(b)
-    if fa * fb >= 0:
-        return None, 0
+#     fa, fb = f(a), f(b)
+#     if fa * fb >= 0:
+#         return None, 0
 
-    iteracoes = 0
-    while abs(b - a) > e and iteracoes < max_iter:
-        # c é calculado usando a fórmula do método da Posição Falsa
-        c = (a * fb - b * fa) / (fb - fa)
-        fc = f(c)
+#     iteracoes = 0
+#     while abs(b - a) > e and iteracoes < max_iter:
+#         # c é calculado usando a fórmula do método da Posição Falsa
+#         c = (a * fb - b * fa) / (fb - fa)
+#         fc = f(c)
 
-        if fc == 0:
-            return c, iteracoes
+#         if fc == 0:
+#             return c, iteracoes
 
-        if fa * fc < 0:
-            b, fb = c, fc
-        else:
-            a, fa = c, fc
+#         if fa * fc < 0:
+#             b, fb = c, fc
+#         else:
+#             a, fa = c, fc
 
-        iteracoes += 1
+#         iteracoes += 1
 
-    return (a + b) / 2, iteracoes
+#     return (a + b) / 2, iteracoes
 
 #  FUNÇÃO PARA ENCONTRAR MÚLTIPLAS RAÍZES
 
 
-def encontrar_raizes(metodo, intervalo, e, num_subintervalos=100, **kwargs):
+def encontrar_raizes(metodo, intervalo, e, num_subintervalos=1000, **kwargs):
     """
     Encontra múltiplas raízes de f(x) usando um método numérico específico, 
     testando vários subintervalos dentro de 'intervalo'.
@@ -478,7 +476,7 @@ def main():
     - Aumentar num_subintervalos para uma busca mais refinada.
     - Verificar a definição de g(x) para o método de ponto fixo.
     """
-    intervalo = (1.0, 20.0)
+    intervalo = (0.1, 5.0)
     e = 1e-6
     num_subintervalos = 100
 
@@ -490,43 +488,43 @@ def main():
         print(f"Raiz: {raiz:.6f}, Iterações: {it}")
     print(f"Iterações totais: {iteracoes}\n")
 
-    # Método de Newton-Raphson
-    print("Método de Newton-Raphson:")
-    raizes, iteracoes = encontrar_raizes(
-        newton_raphson, intervalo, e, num_subintervalos)
-    for raiz, it in raizes:
-        print(f"Raiz: {raiz:.6f}, Iterações: {it}")
-    print(f"Iterações totais: {iteracoes}\n")
+    # # Método de Newton-Raphson
+    # print("Método de Newton-Raphson:")
+    # raizes, iteracoes = encontrar_raizes(
+    #     newton_raphson, intervalo, e, num_subintervalos)
+    # for raiz, it in raizes:
+    #     print(f"Raiz: {raiz:.6f}, Iterações: {it}")
+    # print(f"Iterações totais: {iteracoes}\n")
 
-    # Método da Secante
-    print("Método da Secante:")
-    raizes, iteracoes = encontrar_raizes(
-        secante, intervalo, e, num_subintervalos)
-    for raiz, it in raizes:
-        print(f"Raiz: {raiz:.6f}, Iterações: {it}")
-    print(f"Iterações totais: {iteracoes}\n")
+    # # Método da Secante
+    # print("Método da Secante:")
+    # raizes, iteracoes = encontrar_raizes(
+    #     secante, intervalo, e, num_subintervalos)
+    # for raiz, it in raizes:
+    #     print(f"Raiz: {raiz:.6f}, Iterações: {it}")
+    # print(f"Iterações totais: {iteracoes}\n")
 
-    # Método de Ponto Fixo
-    print("Método de Ponto Fixo:")
+    # # Método de Ponto Fixo
+    # print("Método de Ponto Fixo:")
 
-    def g(x):
-        # Aqui estamos escolhendo g(x) = x - f(x)/df(x), algo como uma única iteração de Newton;
-        # nem sempre converge como método de ponto fixo puro, mas serve como exemplo.
-        return x - f(x) / df(x)
+    # def g(x):
+    #     # Aqui estamos escolhendo g(x) = x - f(x)/df(x), algo como uma única iteração de Newton;
+    #     # nem sempre converge como método de ponto fixo puro, mas serve como exemplo.
+    #     return x - f(x) / df(x)
 
-    raizes, iteracoes = encontrar_raizes(
-        ponto_fixo, intervalo, e, num_subintervalos, g=g)
-    for raiz, it in raizes:
-        print(f"Raiz: {raiz:.6f}, Iterações: {it}")
-    print(f"Iterações totais: {iteracoes}\n")
+    # raizes, iteracoes = encontrar_raizes(
+    #     ponto_fixo, intervalo, e, num_subintervalos, g=g)
+    # for raiz, it in raizes:
+    #     print(f"Raiz: {raiz:.6f}, Iterações: {it}")
+    # print(f"Iterações totais: {iteracoes}\n")
 
-    # Método da Posição Falsa
-    print("Método da Posição Falsa:")
-    raizes, iteracoes = encontrar_raizes(
-        posicao_falsa, intervalo, e, num_subintervalos)
-    for raiz, it in raizes:
-        print(f"Raiz: {raiz:.6f}, Iterações: {it}")
-    print(f"Iterações totais: {iteracoes}\n")
+    # # Método da Posição Falsa
+    # print("Método da Posição Falsa:")
+    # raizes, iteracoes = encontrar_raizes(
+    #     posicao_falsa, intervalo, e, num_subintervalos)
+    # for raiz, it in raizes:
+    #     print(f"Raiz: {raiz:.6f}, Iterações: {it}")
+    # print(f"Iterações totais: {iteracoes}\n")
 
 
 # Chama a função principal somente se esse arquivo for executado diretamente.
