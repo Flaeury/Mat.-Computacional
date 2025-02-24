@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from resolver_sistema import resolver_sistema_LU
+from avaliacao2.resolver_sistema import resolver_sistema_LU
+
 
 class MinimosQuadrados:
     def __init__(self, x, y, funcoes_base):
@@ -30,8 +31,10 @@ class MinimosQuadrados:
 
         for i in range(m):
             for j in range(m):
-                A[i, j] = sum(self.funcoes_base[i](x_k) * self.funcoes_base[j](x_k) for x_k in self.x)
-            b[i] = sum(y_k * self.funcoes_base[i](x_k) for x_k, y_k in zip(self.x, self.y))
+                A[i, j] = sum(self.funcoes_base[i](x_k) *
+                              self.funcoes_base[j](x_k) for x_k in self.x)
+            b[i] = sum(y_k * self.funcoes_base[i](x_k)
+                       for x_k, y_k in zip(self.x, self.y))
 
         coeficientes = resolver_sistema_LU(A, b)
         return coeficientes
@@ -63,6 +66,7 @@ class MinimosQuadrados:
         plt.legend()
         plt.grid()
         plt.show()
+
 
 if __name__ == "__main__":
     # Exemplo de uso
